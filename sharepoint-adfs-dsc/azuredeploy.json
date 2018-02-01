@@ -28,7 +28,7 @@
     },
     "adminUserName": {
       "type": "string",
-      "defaultValue": "root",
+      "defaultValue": "rubensr",
       "minLength": 1,
       "metadata": {
         "description": "Name of the AD and SharePoint administrator"
@@ -161,7 +161,7 @@
     },
     "vmsTimeZone": {
       "type": "string",
-      "defaultValue": "Australia/Adelaide",
+      "defaultValue": "Cen. Australia Standard Time",
       "minLength": 2,
       "metadata": {
         "description": "Time zone of the VMs. Get the list with '[System.TimeZoneInfo]::GetSystemTimeZones().Id'. Note that 'UTC' works but 'UTC+xx' does NOT work."
@@ -170,6 +170,7 @@
     "dnsLabelPrefix": {
       "type": "string",
       "minLength": 2,
+      "defaultValue": "rrfj",
       "metadata": {
         "description": "Prefix of public DNS names of VMs, e.g. 'dnsLabelPrefix-VMName.region.cloudapp.azure.com'"
       }
