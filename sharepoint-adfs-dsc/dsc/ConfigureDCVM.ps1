@@ -19,7 +19,8 @@
         [String] $SPTrustedSitesName = "SPSites",
         [String] $ADFSSiteName = "ADFS",
         [String] $RegistrationKey = "4826093e-3611-463c-bec4-571ea9f280ec",
-        [Int] $DSCPort = 8080
+        [Int] $DSCPort = 8080,
+        [String] $certificateThumbprint = "AllowUnencryptedTraffic"
     )
 
     Import-DscResource -ModuleName xActiveDirectory, xDisk, xNetworking, cDisk, xPSDesiredStateConfiguration, xAdcsDeployment, xCertificate, xPendingReboot, cADFS, xDnsServer
@@ -336,7 +337,7 @@ param = c.Value);
             EndpointName            = "PSDSCPullServer"
             Port                    = $DSCPort
             PhysicalPath            = "$env:SystemDrive\inetpub\PSDSCPullServer"
-            CertificateThumbprint   = "AllowUnencryptedTraffic" #$certificateThumbprint
+            CertificateThumbprint   = $certificateThumbprint
             ModulePath              = "$end:PROGRAMFILES\WindowsPowershell\DscService\Modules"
             ConfigurationPath       = "$env:PROGRAMFILES\WindowsPowershell\DscService\Configuration"
             State                   = "Started"
