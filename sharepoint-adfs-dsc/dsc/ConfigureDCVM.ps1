@@ -17,7 +17,9 @@
         [Int] $RetryCount = 20,
         [Int] $RetryIntervalSec = 30,
         [String] $SPTrustedSitesName = "SPSites",
-        [String] $ADFSSiteName = "ADFS"
+        [String] $ADFSSiteName = "ADFS",
+        [String] $RegistrationKey = "4826093e-3611-463c-bec4-571ea9f280ec",
+        [Int] $DSCPort = 8080
     )
 
     Import-DscResource -ModuleName xActiveDirectory, xDisk, xNetworking, cDisk, xPSDesiredStateConfiguration, xAdcsDeployment, xCertificate, xPendingReboot, cADFS, xDnsServer
@@ -225,7 +227,11 @@
             DependsOn = "[xADUser]CreateAdfsSvcAccount"
         }
 
-        WindowsFeature AddADFS          { Name = "ADFS-Federation"; Ensure = "Present"; DependsOn = "[Group]AddAdfsSvcAccountToDomainAdminsGroup" }
+        WindowsFeature AddADFS { 
+            Name = "ADFS-Federation"
+            Ensure = "Present"
+            DependsOn = "[Group]AddAdfsSvcAccountToDomainAdminsGroup" 
+        }
 
         xDnsRecord AddADFSHostDNS {
             Name = $ADFSSiteName
@@ -299,6 +305,52 @@ param = c.Value);
             PsDscRunAsCredential = $DomainCredsNetbios
             DependsOn = "[cADFSFarm]CreateADFSFarm"
         }
+
+        ###########################
+        # DSC Setup
+        ###########################
+        WindowsFeature DSCServiceFeature {
+            Ensure = "Present"
+            Name   = "DSC-Service"
+        }
+
+        xCertReq DSCCert
+        {
+            CARootName                = "$DomainNetbiosName-$ComputerName-CA"
+            CAServerFQDN              = "$ComputerName.$DomainFQDN"
+            Subject                   = "$ADFSSiteName.DSC"
+            FriendlyName              = "$ADFSSiteName DSC Pull Server"
+            KeyLength                 = '2048'
+            Exportable                = $true
+            ProviderName              = '"Microsoft RSA SChannel Cryptographic Provider"'
+            OID                       = '1.3.6.1.5.5.7.3.1'
+            KeyUsage                  = '0xa0'
+            CertificateTemplate       = 'WebServer'
+            AutoRenew                 = $true
+            Credential                = $DomainCredsNetbios
+            DependsOn                 = '[xWaitForCertificateServices]WaitAfterADCSProvisioning'
+        }
+
+        xDscWebService PSDSCPullServer {
+            Ensure                  = "Present"
+            EndpointName            = "PSDSCPullServer"
+            Port                    = $DSCPort
+            PhysicalPath            = "$env:SystemDrive\inetpub\PSDSCPullServer"
+            CertificateThumbprint   = "AllowUnencryptedTraffic" #$certificateThumbprint
+            ModulePath              = "$end:PROGRAMFILES\WindowsPowershell\DscService\Modules"
+            ConfigurationPath       = "$env:PROGRAMFILES\WindowsPowershell\DscService\Configuration"
+            State                   = "Started"
+            DependsOn               = "[WindowsFeature]DSCServiceFeature", "[xCertReq]DSCCert"
+        }
+
+        File RegistrationKeyFile
+        {
+            Ensure          = 'Present'
+            Type            = 'File'
+            DestinationPath = "$env:ProgramFiles\WindowsPowerShell\DscService\RegistrationKeys.txt"
+            Contents        = $RegistrationKey
+        }
+
    }
 }
 
