@@ -346,7 +346,6 @@ param = c.Value);
             UseSecurityBestPractices        = $false
             RegistrationKeyPath             = "$env:PROGRAMFILES\WindowsPowerShell\DscService"   
             AcceptSelfSignedCertificates    = $true
-            Enable32BitAppOnWin64           = $false
             DependsOn                       = "[WindowsFeature]DSCServiceFeature", "[xCertReq]DSCCert"
         }
 

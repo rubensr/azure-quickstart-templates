@@ -247,7 +247,7 @@
       "fileName": "ConfigureDCVM.zip",
       "script": "ConfigureDCVM.ps1",
       "function": "ConfigureDCVM",
-      "forceUpdateTag": "1.3"
+      "forceUpdateTag": "1.4"
     },
     "dscConfigureSQLVM": {
       "fileName": "ConfigureSQLVM.zip",
