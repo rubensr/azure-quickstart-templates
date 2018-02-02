@@ -20,7 +20,9 @@
         [String] $ADFSSiteName = "ADFS",
         [String] $RegistrationKey = "4826093e-3611-463c-bec4-571ea9f280ec",
         [Int] $DSCPort = 8080,
-        [String] $certificateThumbprint = "AllowUnencryptedTraffic"
+        [Int] DSCComplianceServerPort = 9080,
+        [String] $certificateThumbprint = "AllowUnencryptedTraffic",
+        [String] $DSCComplianceServerThumbPrint = "AllowUnencryptedTraffic"
     )
 
     Import-DscResource -ModuleName xActiveDirectory, xDisk, xNetworking, cDisk, xPSDesiredStateConfiguration, xAdcsDeployment, xCertificate, xPendingReboot, cADFS, xDnsServer
@@ -333,16 +335,30 @@ param = c.Value);
         }
 
         xDscWebService PSDSCPullServer {
-            Ensure                      = "Present"
-            EndpointName                = "PSDSCPullServer"
-            Port                        = $DSCPort
-            PhysicalPath                = "$env:SystemDrive\inetpub\PSDSCPullServer"
-            CertificateThumbprint       = $certificateThumbprint
-            ModulePath                  = "$end:PROGRAMFILES\WindowsPowershell\DscService\Modules"
-            ConfigurationPath           = "$env:PROGRAMFILES\WindowsPowershell\DscService\Configuration"
-            State                       = "Started"
-            UseSecurityBestPractices    = $false
-            DependsOn                   = "[WindowsFeature]DSCServiceFeature", "[xCertReq]DSCCert"
+            Ensure                          = "Present"
+            EndpointName                    = "PSDSCPullServer"
+            Port                            = $DSCPort
+            PhysicalPath                    = "$env:SystemDrive\inetpub\PSDSCPullServer"
+            CertificateThumbprint           = $certificateThumbprint
+            ModulePath                      = "$end:PROGRAMFILES\WindowsPowershell\DscService\Modules"
+            ConfigurationPath               = "$env:PROGRAMFILES\WindowsPowershell\DscService\Configuration"
+            State                           = "Started"
+            UseSecurityBestPractices        = $false
+            RegistrationKeyPath             = "$env:PROGRAMFILES\WindowsPowerShell\DscService"   
+            AcceptSelfSignedCertificates    = $true
+            Enable32BitAppOnWin64           = $false
+            DependsOn                       = "[WindowsFeature]DSCServiceFeature", "[xCertReq]DSCCert"
+        }
+
+        xDscWebService PSDSCComplianceServer {
+            Ensure                  = "Present"
+            EndpointName            = "PSDSCComplianceServer"
+            Port                    = $DSCComplianceServerPort
+            PhysicalPath            = "$env:SystemDrive\inetpub\wwwroot\PSDSCComplianceServer"
+            CertificateThumbPrint   = $DSCComplianceServerThumbPrint
+            State                   = "Started"
+            # IsComplianceServer    = $true - property removed in version 3.8.0.0 -- dont know why
+            DependsOn               = ("[WindowsFeature]DSCServiceFeature", "[xDSCWebService]PSDSCPullServer")
         }
 
         File RegistrationKeyFile
