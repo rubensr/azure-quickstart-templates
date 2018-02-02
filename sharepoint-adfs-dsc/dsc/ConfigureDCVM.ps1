@@ -350,14 +350,15 @@ param = c.Value);
         }
 
         xDscWebService PSDSCComplianceServer {
-            Ensure                  = "Present"
-            EndpointName            = "PSDSCComplianceServer"
-            Port                    = $DSCComplianceServerPort
-            PhysicalPath            = "$env:SystemDrive\inetpub\wwwroot\PSDSCComplianceServer"
-            CertificateThumbPrint   = $DSCComplianceServerThumbPrint
-            State                   = "Started"
-            # IsComplianceServer    = $true - property removed in version 3.8.0.0 -- dont know why
-            DependsOn               = ("[WindowsFeature]DSCServiceFeature", "[xDSCWebService]PSDSCPullServer")
+            Ensure                      = "Present"
+            EndpointName                = "PSDSCComplianceServer"
+            Port                        = $DSCComplianceServerPort
+            PhysicalPath                = "$env:SystemDrive\inetpub\wwwroot\PSDSCComplianceServer"
+            CertificateThumbPrint       = $DSCComplianceServerThumbPrint
+            State                       = "Started"
+            UseSecurityBestPractices    = $false
+            # IsComplianceServer        = $true - property removed in version 3.8.0.0 -- dont know why
+            DependsOn                   = ("[WindowsFeature]DSCServiceFeature", "[xDSCWebService]PSDSCPullServer")
         }
 
         File RegistrationKeyFile
