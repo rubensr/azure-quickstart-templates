@@ -333,15 +333,16 @@ param = c.Value);
         }
 
         xDscWebService PSDSCPullServer {
-            Ensure                  = "Present"
-            EndpointName            = "PSDSCPullServer"
-            Port                    = $DSCPort
-            PhysicalPath            = "$env:SystemDrive\inetpub\PSDSCPullServer"
-            CertificateThumbprint   = $certificateThumbprint
-            ModulePath              = "$end:PROGRAMFILES\WindowsPowershell\DscService\Modules"
-            ConfigurationPath       = "$env:PROGRAMFILES\WindowsPowershell\DscService\Configuration"
-            State                   = "Started"
-            DependsOn               = "[WindowsFeature]DSCServiceFeature", "[xCertReq]DSCCert"
+            Ensure                      = "Present"
+            EndpointName                = "PSDSCPullServer"
+            Port                        = $DSCPort
+            PhysicalPath                = "$env:SystemDrive\inetpub\PSDSCPullServer"
+            CertificateThumbprint       = $certificateThumbprint
+            ModulePath                  = "$end:PROGRAMFILES\WindowsPowershell\DscService\Modules"
+            ConfigurationPath           = "$env:PROGRAMFILES\WindowsPowershell\DscService\Configuration"
+            State                       = "Started"
+            UseSecurityBestPractices    = $false
+            DependsOn                   = "[WindowsFeature]DSCServiceFeature", "[xCertReq]DSCCert"
         }
 
         File RegistrationKeyFile
