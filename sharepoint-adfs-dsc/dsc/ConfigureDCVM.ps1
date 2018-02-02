@@ -20,7 +20,7 @@
         [String] $ADFSSiteName = "ADFS",
         [String] $RegistrationKey = "4826093e-3611-463c-bec4-571ea9f280ec",
         [Int] $DSCPort = 8080,
-        [Int] DSCComplianceServerPort = 9080,
+        [Int] $DSCComplianceServerPort = 9080,
         [String] $certificateThumbprint = "AllowUnencryptedTraffic",
         [String] $DSCComplianceServerThumbPrint = "AllowUnencryptedTraffic"
     )
