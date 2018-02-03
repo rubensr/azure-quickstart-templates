@@ -22,7 +22,7 @@
         [Int] $DSCPort = 8080,
         [Int] $DSCComplianceServerPort = 9080,
         [String] $certificateThumbprint = "27118CF3F0E61020D386990349BBC5535BE56590", #"AllowUnencryptedTraffic",
-        [String] $DSCComplianceServerThumbPrint = "AllowUnencryptedTraffic"
+        [String] $DSCComplianceServerThumbPrint = "27118CF3F0E61020D386990349BBC5535BE56590"
     )
 
     Import-DscResource -ModuleName xActiveDirectory, xDisk, xNetworking, cDisk, xPSDesiredStateConfiguration, xAdcsDeployment, xCertificate, xPendingReboot, cADFS, xDnsServer
