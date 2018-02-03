@@ -317,33 +317,16 @@ param = c.Value);
             Name   = "DSC-Service"
         }
 
-        xCertReq DSCCert
-        {
-            CARootName                = "$DomainNetbiosName-$ComputerName-CA"
-            CAServerFQDN              = "$ComputerName.$DomainFQDN"
-            Subject                   = "$ADFSSiteName.DSC"
-            FriendlyName              = "$ADFSSiteName DSC Pull Server"
-            KeyLength                 = '2048'
-            Exportable                = $true
-            ProviderName              = '"Microsoft RSA SChannel Cryptographic Provider"'
-            OID                       = '1.3.6.1.5.5.7.3.1'
-            KeyUsage                  = '0xa0'
-            CertificateTemplate       = 'WebServer'
-            AutoRenew                 = $true
-            Credential                = $DomainCredsNetbios
-            DependsOn                 = '[xWaitForCertificateServices]WaitAfterADCSProvisioning'
-        }
-
         xDscWebService PSDSCPullServer {
             Ensure                          = "Present"
             EndpointName                    = "PSDSCPullServer"
             Port                            = $DSCPort
             PhysicalPath                    = "$env:SystemDrive\inetpub\wwwroot\PSDSCPullServer"
             CertificateThumbprint           = $certificateThumbprint
-            ModulePath                      = "$end:PROGRAMFILES\WindowsPowershell\DscService\Modules"
+            ModulePath                      = "$env:PROGRAMFILES\WindowsPowershell\DscService\Modules"
             ConfigurationPath               = "$env:PROGRAMFILES\WindowsPowershell\DscService\Configuration"
             State                           = "Started"
-            UseSecurityBestPractices        = $false
+            UseSecurityBestPractices        = $true
             RegistrationKeyPath             = "$env:PROGRAMFILES\WindowsPowerShell\DscService"   
             AcceptSelfSignedCertificates    = $true
             DependsOn                       = "[WindowsFeature]DSCServiceFeature", "[xCertReq]DSCCert"
@@ -356,7 +339,7 @@ param = c.Value);
             PhysicalPath                = "$env:SystemDrive\inetpub\wwwroot\PSDSCComplianceServer"
             CertificateThumbPrint       = $DSCComplianceServerThumbPrint
             State                       = "Started"
-            UseSecurityBestPractices    = $false
+            UseSecurityBestPractices    = $true
             # IsComplianceServer        = $true - property removed in version 3.8.0.0 -- dont know why
             DependsOn                   = ("[WindowsFeature]DSCServiceFeature", "[xDSCWebService]PSDSCPullServer")
         }
