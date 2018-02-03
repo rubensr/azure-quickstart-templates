@@ -21,7 +21,7 @@
         [String] $RegistrationKey = "4826093e-3611-463c-bec4-571ea9f280ec",
         [Int] $DSCPort = 8080,
         [Int] $DSCComplianceServerPort = 9080,
-        [String] $certificateThumbprint = "AllowUnencryptedTraffic",
+        [String] $certificateThumbprint = "27118CF3F0E61020D386990349BBC5535BE56590", #"AllowUnencryptedTraffic",
         [String] $DSCComplianceServerThumbPrint = "AllowUnencryptedTraffic"
     )
 
