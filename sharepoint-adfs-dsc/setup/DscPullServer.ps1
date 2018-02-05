@@ -2,7 +2,6 @@ Configuration DscPullServer {
     param(
         [string[]]$NodeName              = "localhost", 
 
-        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [String]  $RegistrationKey       = "4826093e-3611-463c-bec4-571ea9f280ec",
 
@@ -14,6 +13,9 @@ Configuration DscPullServer {
         [Int]     $DSCPort               = 8080
     )
     
+    Import-DSCResource -ModuleName xPSDesiredStateConfiguration
+    Import-DSCResource –ModuleName PSDesiredStateConfiguration
+
     Node $NodeName {
         WindowsFeature DSCServiceFeature {
             Ensure = "Present"
