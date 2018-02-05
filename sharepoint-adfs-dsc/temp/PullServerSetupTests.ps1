@@ -19,6 +19,9 @@
 
 
  Describe PullServerInstallationTests {
+    AfterAll {
+        Remove-Item .\PullServerSetupTestMetaConfig -Force -Recurse
+    }
     BeforeAll{
  
         # UPDATE THE PULLSERVER URL, If it is different from the default value.
