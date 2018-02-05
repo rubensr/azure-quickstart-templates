@@ -14,7 +14,7 @@ Configuration DscPullServer {
     )
     
     Import-DSCResource -ModuleName xPSDesiredStateConfiguration
-    Import-DSCResource –ModuleName PSDesiredStateConfiguration
+    Import-DSCResource -ModuleName PSDesiredStateConfiguration
 
     Node $NodeName {
         WindowsFeature DSCServiceFeature {
