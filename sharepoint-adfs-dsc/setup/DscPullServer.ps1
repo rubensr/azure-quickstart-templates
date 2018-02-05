@@ -1,12 +1,20 @@
-Configuration SetupDCVM {
+Configuration DscPullServer {
     param(
-      [String]  $RegistrationKey       = "4826093e-3611-463c-bec4-571ea9f280ec",
-      [Int]     $DSCPort               = 8080,
-      [String]  $CertificateThumbprint = "1A01A0E90FD240C665A745718A1AAE08BFB99B82",
-      [Boolean] $DSCSelfSignedCerts    = $true
+        [string[]]$NodeName = "localhost", 
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [String]  $RegistrationKey       = "4826093e-3611-463c-bec4-571ea9f280ec",
+
+        [ValidateNotNullOrEmpty()] 
+        [String]  $CertificateThumbprint = "1A01A0E90FD240C665A745718A1AAE08BFB99B82",
+        
+        [Boolean] $DSCSelfSignedCerts    = $true,
+        
+        [Int]     $DSCPort               = 8080
     )
     
-    Node localhost {
+    Node $NodeName {
         WindowsFeature DSCServiceFeature {
             Ensure = "Present"
             Name   = "DSC-Service"
