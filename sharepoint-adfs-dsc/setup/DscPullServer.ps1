@@ -44,3 +44,6 @@ Configuration DscPullServer {
         }
     }
 }
+
+DscPullServer -OutputPath f:\Configs\PullServer
+Start-DscConfiguration -Path f:\Configs\PullServer -Wait -Verbose
