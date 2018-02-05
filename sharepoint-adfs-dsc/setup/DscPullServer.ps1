@@ -1,6 +1,6 @@
 Configuration DscPullServer {
     param(
-        [string[]]$NodeName = "localhost", 
+        [string[]]$NodeName              = "localhost", 
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
