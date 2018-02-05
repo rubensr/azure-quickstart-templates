@@ -194,14 +194,14 @@
       "metadata": {
         "description": "Name of Key Vault that has a secret"
       },
-      "defaultValue": "testkv001"
+      "defaultValue": "rrfjvault"
     },
     "vaultResourceGroup": {
       "type": "string",
       "metadata": {
         "description": "Resource Group of Key Vault that has a secret"
       },
-      "defaultValue": "testkv0001rg"
+      "defaultValue": "cloud-shell-storage-southeastasia"
     },
     "secretUrl": {
       "type": "string",
@@ -268,7 +268,7 @@
       "fileName": "ConfigureDCVM.zip",
       "script": "ConfigureDCVM.ps1",
       "function": "ConfigureDCVM",
-      "forceUpdateTag": "1.16"
+      "forceUpdateTag": "1.0"
     },
     "dscConfigureSQLVM": {
       "fileName": "ConfigureSQLVM.zip",

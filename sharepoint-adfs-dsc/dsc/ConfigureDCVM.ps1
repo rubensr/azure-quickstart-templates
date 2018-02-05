@@ -18,11 +18,7 @@
         [Int] $RetryIntervalSec = 30,
         [String] $SPTrustedSitesName = "SPSites",
         [String] $ADFSSiteName = "ADFS",
-        [String] $RegistrationKey = "4826093e-3611-463c-bec4-571ea9f280ec",
-        [Int] $DSCPort = 8080,
-        [Int] $DSCComplianceServerPort = 9080,
-        [String] $certificateThumbprint = "1A01A0E90FD240C665A745718A1AAE08BFB99B82",
-        [Boolean] $dscSelfSignedCerts = $true
+        [String] $DSCSiteName = "DSC"
     )
 
     Import-DscResource -ModuleName xActiveDirectory, xDisk, xNetworking, cDisk, xPSDesiredStateConfiguration, xAdcsDeployment, xCertificate, xPendingReboot, cADFS, xDnsServer
@@ -245,6 +241,15 @@
             DependsOn = "[xPendingReboot]Reboot1"
         }
 
+        xDnsRecord AddDSCHostDNS {
+            Name = $DSCSiteName
+            Zone = $DomainFQDN
+            Target = $PrivateIP
+            Type = "ARecord"
+            Ensure = "Present"
+            DependsOn = "[xPendingReboot]Reboot1"
+        }
+
         xScript ExportCertificates
         {
             SetScript = 
@@ -308,38 +313,6 @@ param = c.Value);
             PsDscRunAsCredential = $DomainCredsNetbios
             DependsOn = "[cADFSFarm]CreateADFSFarm"
         }
-
-        ###########################
-        # DSC Setup
-        ###########################
-        WindowsFeature DSCServiceFeature {
-            Ensure = "Present"
-            Name   = "DSC-Service"
-        }
-
-        xDscWebService PSDSCPullServer {
-            Ensure                          = "Present"
-            EndpointName                    = "PSDSCPullServer"
-            Port                            = $DSCPort
-            PhysicalPath                    = "$env:SystemDrive\inetpub\wwwroot\PSDSCPullServer"
-            CertificateThumbprint           = $certificateThumbprint
-            ModulePath                      = "$env:PROGRAMFILES\WindowsPowershell\DscService\Modules"
-            ConfigurationPath               = "$env:PROGRAMFILES\WindowsPowershell\DscService\Configuration"
-            State                           = "Started"
-            UseSecurityBestPractices        = $true
-            RegistrationKeyPath             = "$env:PROGRAMFILES\WindowsPowerShell\DscService"   
-            AcceptSelfSignedCertificates    = $dscSelfSignedCerts
-            DependsOn                       = "[WindowsFeature]DSCServiceFeature"
-        }
-
-        File RegistrationKeyFile
-        {
-            Ensure          = 'Present'
-            Type            = 'File'
-            DestinationPath = "$env:ProgramFiles\WindowsPowerShell\DscService\RegistrationKeys.txt"
-            Contents        = $RegistrationKey
-        }
-
    }
 }
 
