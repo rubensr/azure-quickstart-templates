@@ -26,13 +26,13 @@ Configuration DscPullServer {
         WindowsFeature IISManagementTools {
             Ensure    = "Present"
             Name      = "Web-Mgmt-Tools"
-            DependsOn = [WindowsFeature]IIS
+            DependsOn = "[WindowsFeature]IIS"
         }
 
         WindowsFeature DSCServiceFeature {
             Ensure    = "Present"
             Name      = "DSC-Service"
-            DependsOn = [WindowsFeature]IIS
+            DependsOn = "[WindowsFeature]IIS"
         }
 
         xWebAppPool RemoveDotNet2Pool         { Name = ".NET v2.0";            Ensure = "Absent"}
