@@ -29,12 +29,6 @@ Configuration DscPullServer {
             DependsOn = "[WindowsFeature]IIS"
         }
 
-        WindowsFeature DSCServiceFeature {
-            Ensure    = "Present"
-            Name      = "DSC-Service"
-            DependsOn = "[WindowsFeature]IIS"
-        }
-
         xWebAppPool RemoveDotNet2Pool         { Name = ".NET v2.0";            Ensure = "Absent"}
         xWebAppPool RemoveDotNet2ClassicPool  { Name = ".NET v2.0 Classic";    Ensure = "Absent"}
         xWebAppPool RemoveDotNet45Pool        { Name = ".NET v4.5";            Ensure = "Absent"}
@@ -42,6 +36,12 @@ Configuration DscPullServer {
         xWebAppPool RemoveClassicDotNetPool   { Name = "Classic .NET AppPool"; Ensure = "Absent"}
         xWebAppPool RemoveDefaultAppPool      { Name = "DefaultAppPool";       Ensure = "Absent"}
         xWebSite    RemoveDefaultWebSite      { Name = "Default Web Site";     Ensure = "Absent"; PhysicalPath = "C:\inetpub\wwwroot"}
+
+        WindowsFeature DSCServiceFeature {
+            Ensure    = "Present"
+            Name      = "DSC-Service"
+            DependsOn = "[WindowsFeature]IIS"
+        }
 
         xDscWebService PSDSCPullServer {
             Ensure                          = "Present"
