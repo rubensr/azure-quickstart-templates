@@ -6,22 +6,6 @@ Configuration DscPullNode {
           RefreshFrequencyMins = 30
           RebootNodeIfNeeded   = $true
       }
-
-      ConfigurationRepositoryWeb CONTOSO-PullSrv
-      {
-          ServerURL          = 'https://dsc.contoso.local:8080/psdscpullserver.svc'
-          RegistrationKey    = '4826093e-3611-463c-bec4-571ea9f280ec'
-          AllowUnsecureConnection = $false
-          ConfigurationNames = @('GeneralConfig')
-      }   
-
-      ReportServerWeb CONTOSO-PullSrv
-      {
-          ServerURL       = 'https://dsc.contoso.local:8080/psdscpullserver.svc'
-          RegistrationKey = '4826093e-3611-463c-bec4-571ea9f280ec'
-          AllowUnsecureConnection = $false
-      }
-
   }
 }
 
