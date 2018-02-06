@@ -1,7 +1,7 @@
 Configuration PullNode {
     Node $AllNodes.NodeName {
         LocalConfigurationManager {
-            CertificateID = "FE239F0051809E9A3AC2DF53234557990CCD0C44"
+            CertificateID        = "95B14F52F627E44E974C23AFCEF6CBB5F8411552"
             RefreshMode          = 'Pull'
             RefreshFrequencyMins = 30
             RebootNodeIfNeeded   = $true
@@ -14,12 +14,12 @@ $cd = @{
     AllNodes = @(    
         @{ 
             NodeName = "sp"
-            CertificateFile = "F:\pwsh\dscencrypt.cer"
+            CertificateFile = "F:\setup\dscpublickey.cer"
         }
     ) 
 }
 
-PullNode -OutputPath 'f:\dsc\PullNode' -ConfigurationData $cd
-Set-DscLocalConfigurationManager -Path f:\dsc\PullNode -Verbose -ComputerName sp
+PullNode -OutputPath 'f:\configs\PullNode' -ConfigurationData $cd
+Set-DscLocalConfigurationManager -Path f:\configs\PullNode -Verbose -ComputerName sp
 #Start-DscConfiguration -Path f:\dsc\PullNode -ComputerName sp -Wait -Force -Verbose
 
