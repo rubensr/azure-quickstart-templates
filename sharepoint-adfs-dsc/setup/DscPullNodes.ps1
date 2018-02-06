@@ -19,7 +19,7 @@ $cd = @{
   ) 
 }
 
-PullNode -OutputPath 'f:\configs\PullNode' -ConfigurationData $cd
+DscPullNode -OutputPath 'f:\configs\PullNode' -ConfigurationData $cd
 Set-DscLocalConfigurationManager -Path f:\configs\PullNode -Verbose -ComputerName sp
 #Start-DscConfiguration -Path f:\dsc\PullNode -ComputerName sp -Wait -Force -Verbose
 
