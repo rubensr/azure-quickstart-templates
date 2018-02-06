@@ -13,7 +13,7 @@ configuration PullClientConfigNames
 
         ConfigurationRepositoryWeb CONTOSO-PullSrv
         {
-            ServerURL               = 'https://dsc.contoso.local:8080/psdscpullserver.svc'
+            ServerURL               = 'https://dc.contoso.local:8080/psdscpullserver.svc'
             RegistrationKey         = '4826093e-3611-463c-bec4-571ea9f280ec'
             AllowUnsecureConnection = $false
             ConfigurationNames      = @('SPWFEConfig')
@@ -21,7 +21,7 @@ configuration PullClientConfigNames
 
         ReportServerWeb CONTOSO-PullSrv
         {
-            ServerURL               = 'https://dsc.contoso.local:8080/psdscpullserver.svc'
+            ServerURL               = 'https://dc.contoso.local:8080/psdscpullserver.svc'
             RegistrationKey         = '4826093e-3611-463c-bec4-571ea9f280ec'
             AllowUnsecureConnection = $false
         }
