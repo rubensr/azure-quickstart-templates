@@ -2,7 +2,6 @@ Configuration DscPullNode {
   Node $AllNodes.NodeName {
       LocalConfigurationManager {
           CertificateID        = "95B14F52F627E44E974C23AFCEF6CBB5F8411552"
-          RefreshMode          = 'Pull'
           RefreshFrequencyMins = 30
           RebootNodeIfNeeded   = $true
       }
