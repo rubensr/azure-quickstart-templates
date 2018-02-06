@@ -11,7 +11,7 @@ configuration PullClientConfigNames
             RebootNodeIfNeeded   = $true
         }
 
-        ConfigurationRepositoryWeb CONTOSO-PullSrv
+        ConfigurationRepositoryWeb PullSrv
         {
             ServerURL               = 'https://dc.contoso.local:8080/psdscpullserver.svc'
             RegistrationKey         = '4826093e-3611-463c-bec4-571ea9f280ec'
@@ -19,7 +19,7 @@ configuration PullClientConfigNames
             ConfigurationNames      = @('SPWFEConfig')
         }   
 
-        ReportServerWeb CONTOSO-PullSrv
+        ReportServerWeb PullSrv
         {
             ServerURL               = 'https://dc.contoso.local:8080/psdscpullserver.svc'
             RegistrationKey         = '4826093e-3611-463c-bec4-571ea9f280ec'
