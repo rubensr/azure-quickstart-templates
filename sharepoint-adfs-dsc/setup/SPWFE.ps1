@@ -31,5 +31,5 @@ $cd = @{
   ) 
 }
 
-General -OutputPath 'f:\configs\SPWFE' -ConfigurationData $cd -Credential (Get-Credential -Message 'Enter Credential for configuration')
+SPWFEConfig -OutputPath 'f:\configs\SPWFE' -ConfigurationData $cd -Credential (Get-Credential -Message 'Enter Credential for configuration')
 New-DscChecksum -Path 'f:\configs\SPWFE\SPWFEConfig.mof'
