@@ -1,5 +1,5 @@
 [DSCLocalConfigurationManager()]
-configuration PullClientConfigNames
+configuration $AllNodes.NodeName
 {
     Node sp
     {
@@ -28,5 +28,14 @@ configuration PullClientConfigNames
     }
 }
 
-PullClientConfigNames -OutputPath f:\configs\targetnodes
+$cd = @{
+  AllNodes = @(    
+      @{ 
+          NodeName = "sp"
+      }
+  ) 
+}
+
+PullClientConfigNames -OutputPath f:\configs\targetnodes -configurationData $cd
+
 
