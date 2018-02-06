@@ -26,7 +26,7 @@ $cd = @{
   AllNodes = @(    
       @{ 
           NodeName = "SPWFEConfig"
-          CertificateFile = "F:\setup\dscencrypt.cer"
+          CertificateFile = "F:\setup\dscpublickey.cer"
       }
   ) 
 }
