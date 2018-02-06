@@ -13,19 +13,20 @@ configuration PullClientConfigNames
 
         ConfigurationRepositoryWeb CONTOSO-PullSrv
         {
-            ServerURL          = 'https://dsc.contoso.local:8080/psdscpullserver.svc'
-            RegistrationKey    = '4826093e-3611-463c-bec4-571ea9f280ec'
+            ServerURL               = 'https://dsc.contoso.local:8080/psdscpullserver.svc'
+            RegistrationKey         = '4826093e-3611-463c-bec4-571ea9f280ec'
             AllowUnsecureConnection = $false
-            ConfigurationNames = @('SPWFEConfig')
+            ConfigurationNames      = @('SPWFEConfig')
         }   
 
         ReportServerWeb CONTOSO-PullSrv
         {
-            ServerURL       = 'https://dsc.contoso.local:8080/psdscpullserver.svc'
-            RegistrationKey = '4826093e-3611-463c-bec4-571ea9f280ec'
+            ServerURL               = 'https://dsc.contoso.local:8080/psdscpullserver.svc'
+            RegistrationKey         = '4826093e-3611-463c-bec4-571ea9f280ec'
             AllowUnsecureConnection = $false
         }
     }
 }
 
-PullClientConfigNames
+PullClientConfigNames -OutputPath f:\configs\targetnodes
+
